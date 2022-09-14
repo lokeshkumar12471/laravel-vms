@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request as HttpRequest;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Illuminate\Support\Facades\Hash as FacadesHash;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CustomAuthController extends Controller
 {
@@ -15,12 +15,13 @@ class CustomAuthController extends Controller
         return view('auth.login');
     }
     public function custom_login(Request $request)
-    {$request->validate([
-        'email' => 'required',
-        'password' => 'required',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
         $credential = $request->only('email', 'password');
-        if (FacadesAuth::attempt($credential)) {
+        if (Auth::attempt($credential)) {
             return redirect()->intended('dashboard')->withSuccess('login');
         }
         return redirect('login')->with('error', 'Login Details are not Vaild');
@@ -29,7 +30,7 @@ class CustomAuthController extends Controller
     {
         return view('auth.registration');
     }
-    public function custom_registration(HttpRequest $request)
+    public function custom_registration(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -40,17 +41,22 @@ class CustomAuthController extends Controller
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => FacadesHash::make($data['password']),
+            'password' => Hash::make($data['password']),
             'type' => 'Admin',
         ]);
         return redirect('registration')->with('success', 'Registration Complete');
     }
     public function dashboard()
     {
-        if (FacadesAuth::check()) {
+        if (Auth::check()) {
             return view('dashboard');
         }
         return redirect('login');
-
+    }
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect('login');
     }
 }
