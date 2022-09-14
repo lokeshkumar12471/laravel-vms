@@ -12,7 +12,7 @@
                     <div class="card">
                         <h3 class="card-header text-center">Register User</h3>
                         <div class="card-body">
-                            <form action="{{ route('registration.custom') }}" method="post">
+                            <form action="{{ route('register.custom') }}" method="post">
                                 @csrf
                                 <div class='form-group mb-3'>
                                     <input type="text" name="name" class="form-control" placeholder="Name" />
@@ -36,6 +36,10 @@
                                     <button type="submit" class="btn btn-dark btn-block">Sign Up</button>
                                 </div>
                             </form>
+                            <br />
+                            <div class="text-center">
+                                <a href="{{ route('login') }}">Login</a>
+                            </div>
                         </div>
                     </div>
                 </div>
