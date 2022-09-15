@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     //return view('welcome');
-    //return view('auth.registration');
-
+    // return view('auth.registration');
     return view('auth.login');
 });
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register');
@@ -29,3 +29,7 @@ Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashb
 Route::get('logout', [CustomAuthController::class, 'logout'])->name('logout');
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile\edit_validation', [ProfileController::class, 'edit_validation'])->name('profile.edit_validation');
+Route::get('sub_user', [SubUserController::class, 'index'])->name('sub_user');
+Route::get('sub_user/fetchall', [SubUserController::class, 'fetchall'])->name('sub_user.fetchall');
+Route::get('sub_user/add', [SubUserController::class, 'add'])->name('sub_user.add');
+Route::post('sub_user/add_validation', [SubUserController::class, 'add_validation'])->name('sub_user.add_validation');
