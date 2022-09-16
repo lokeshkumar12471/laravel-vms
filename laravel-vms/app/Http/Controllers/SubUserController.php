@@ -88,4 +88,11 @@ class SubUserController extends Controller
         User::whereId($data['hidden_id'])->update($form_data);
         return redirect('sub_user')->with('success', 'User Data Updated');
     }
+    public function delete($id)
+    {
+        $data = User::findOrFail($id);
+        $data->delete();
+        return redirect('sub_user')->with('success', 'User Data Removed');
+
+    }
 }

@@ -72,6 +72,12 @@
                     }
                 ]
             });
+            $(document).on('click', '.delete', function() {
+                var id = $(this).data('id');
+                if (confirm('Are You sure you want to remove it?')) {
+                    window.location.href = '/sub_user/delete/' + id;
+                }
+            });
         })
     </script>
 @endsection
