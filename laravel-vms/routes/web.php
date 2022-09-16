@@ -56,3 +56,7 @@ Route::get('sub_user/delete/{id}', [SubUserController::class, 'delete'])->name('
 Route::get('department', [DepartmentController::class, 'index'])->name('department');
 
 Route::get('department/fetch_all', [DepartmentController::class, 'fetch_all'])->name('department.fetch_all');
+
+Route::get('department/add', [DepartmentController::class, 'add'])->name('add');
+
+Route::post('department/add_vaildation', [DepartmentController::class, 'add_validation'])->name('department.add_validation');

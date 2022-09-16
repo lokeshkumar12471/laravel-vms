@@ -9,12 +9,15 @@
     </nav>
 
     <div class="mt-4 mb-4">
+        @if (session()->has('success'))
+            <div class="alert alert-success">{{ session()->get('success') }}</div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col col-md-6">Department Management</div>
                     <div class="col col-md-6">
-
+                        <a href="/department/add" class="btn btn-success btn-sm float-end">Add</a>
                     </div>
                 </div>
             </div>
@@ -37,11 +40,11 @@
         </div>
     </div>
     <script>
-        var table = $('#department_table').DataTable({
-            proccessing: true,
-            serverSide: true,
-            ajax: ({
-                "{{ route('department.fetch_all') }}",
+        $(function() {
+            var table = $('#department_table').DataTable({
+                proccessing: true,
+                serverSide: true,
+                ajax: "{{ route('department.fetch_all') }}",
                 columns: [{
                         data: 'department_name',
                         name: 'department_name',

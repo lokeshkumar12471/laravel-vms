@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use DataTables;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Contracts\DataTables;
 
 class DepartmentController extends Controller
 {
@@ -29,4 +29,22 @@ class DepartmentController extends Controller
                 ->make(true);
         }
     }
+    public function add()
+    {
+        return view('add_department');
+    }
+    public function add_validation(Request $request)
+    {
+        $request->validate([
+            'department_name' => 'required',
+            'contact_person' => 'required',
+        ]);
+        $data = $request->all();
+        Department::create([
+            'department_name' => $data['department_name'],
+            'contact_person' => implode("", $data['contact_person']),
+        ]);
+        return redirect('department')->with('success', 'New Department Added');
+    }
+
 }
