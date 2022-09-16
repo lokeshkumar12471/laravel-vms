@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubUserController;
 use Illuminate\Support\Facades\Route;
@@ -51,3 +52,7 @@ Route::get('sub_user/edit/{id}', [SubUserController::class, 'edit'])->name('edit
 Route::post('sub_user/edit_validation', [SubUserController::class, 'edit_validation'])->name('sub_user.edit_validation');
 
 Route::get('sub_user/delete/{id}', [SubUserController::class, 'delete'])->name('delete');
+
+Route::get('department', [DepartmentController::class, 'index'])->name('department');
+
+Route::get('department/fetch_all', [DepartmentController::class, 'fetch_all'])->name('department.fetch_all');
