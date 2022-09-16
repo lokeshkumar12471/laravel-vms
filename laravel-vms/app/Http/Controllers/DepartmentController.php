@@ -46,5 +46,23 @@ class DepartmentController extends Controller
         ]);
         return redirect('department')->with('success', 'New Department Added');
     }
-
+    public function edit($id)
+    {
+        $data = Department::findOrFail($id);
+        return view('edit_department', compact('data'));
+    }
+    public function edit_vaildation(Request $request)
+    {
+        $request->validate([
+            'department_name' => 'required',
+            'contact_person' => 'required',
+        ]);
+        $data = $request->all();
+        $form_data = array(
+            'department_name' => $data['department_name'],
+            'contact_person' => implode("", $data['contact_person']),
+        );
+        Department::whereId($data['hidden_id'])->update($form_data);
+        return redirect('department')->with('success', 'Department Data Updated');
+    }
 }

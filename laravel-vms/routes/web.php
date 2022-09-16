@@ -60,3 +60,7 @@ Route::get('department/fetch_all', [DepartmentController::class, 'fetch_all'])->
 Route::get('department/add', [DepartmentController::class, 'add'])->name('add');
 
 Route::post('department/add_vaildation', [DepartmentController::class, 'add_validation'])->name('department.add_validation');
+
+Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('edit');
+
+Route::post('department/edit_vaildation', [DepartmentController::class, 'edit_validation'])->name('department.edit_validation');
