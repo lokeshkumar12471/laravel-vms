@@ -1,4 +1,5 @@
 @extends('dashboard')
+
 @section('content')
     <h2 class="mt-3">Department Management</h2>
     <nav aria-label="breadcrumb">
@@ -9,9 +10,13 @@
     </nav>
 
     <div class="mt-4 mb-4">
+
         @if (session()->has('success'))
-            <div class="alert alert-success">{{ session()->get('success') }}</div>
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
+            </div>
         @endif
+
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -39,35 +44,44 @@
             </div>
         </div>
     </div>
+
     <script>
-        $(function() {
-            var table = $('#department_table').DataTable({
-                proccessing: true,
-                serverSide: true,
-                ajax: "{{ route('department.fetch_all') }}",
-                columns: [{
-                        data: 'department_name',
-                        name: 'department_name',
-                    },
-                    {
-                        data: 'contact_person',
-                        name: 'contact_person',
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                    },
-                    {
-                        data: 'updated_at',
-                        name: 'updated_at',
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                    }
-                ]
-            })
+        var table = $('#department_table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('department.fetch_all') }}',
+            columns: [{
+                    data: 'department_name',
+                    name: 'department_name'
+                },
+                {
+                    data: 'contact_person',
+                    name: 'contact_person'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false
+                }
+            ]
+        });
+
+        $(document).on('click', '.delete', function() {
+
+            var id = $(this).data('id');
+
+            if (confirm("Are you sure you want to remove it?")) {
+                window.location.href = '/department/delete/' + id;
+            }
+
         });
     </script>
 @endsection

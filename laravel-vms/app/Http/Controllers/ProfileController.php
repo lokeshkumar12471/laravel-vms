@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -14,41 +14,38 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    function index()
+    public function index()
     {
         $data = User::findOrFail(Auth::user()->id);
         return view('profile', compact('data'));
     }
 
-    function edit_validation(Request $request)
+    public function edit_validation(Request $request)
     {
         $request->validate([
-            'email'     =>  'required|email',
-            'name'      =>  'required'
+            'email' => 'required|email',
+            'name' => 'required',
         ]);
 
         $data = $request->all();
 
-        if(!empty($data['password']))
-        {
+        if (!empty($data['password'])) {
             $form_data = array(
-                'name'      =>  $data['name'],
-                'email'     =>  $data['email'],
-                'password'  =>  Hash::make($data['password'])
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
             );
-        }
-        else
-        {
+        } else {
             $form_data = array(
-                'name'      =>  $data['name'],
-                'email'     =>  $data['email']
+                'name' => $data['name'],
+                'email' => $data['email'],
             );
         }
 
         User::whereId(Auth::user()->id)->update($form_data);
 
         return redirect('profile')->with('success', 'Profile Data Updated');
-        
+
     }
 
 }

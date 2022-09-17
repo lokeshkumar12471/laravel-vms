@@ -69,9 +69,12 @@
             });
 
             $(document).on('click', '.remove_person', function() {
+
                 var button_id = $(this).data('id');
+
                 $('#person_' + button_id).remove();
-            })
+
+            });
         });
     </script>
 @endsection

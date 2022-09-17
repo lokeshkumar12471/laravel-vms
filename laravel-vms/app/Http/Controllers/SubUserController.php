@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use DataTables;
+use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class SubUserController extends Controller
 {
@@ -72,7 +72,9 @@ class SubUserController extends Controller
             'email' => 'required|email',
             'name' => 'required',
         ]);
+
         $data = $request->all();
+
         if (!empty($data['password'])) {
             $form_data = array(
                 'name' => $data['name'],
@@ -85,14 +87,19 @@ class SubUserController extends Controller
                 'email' => $data['email'],
             );
         }
+
         User::whereId($data['hidden_id'])->update($form_data);
+
         return redirect('sub_user')->with('success', 'User Data Updated');
+
     }
+
     public function delete($id)
     {
         $data = User::findOrFail($id);
-        $data->delete();
-        return redirect('sub_user')->with('success', 'User Data Removed');
 
+        $data->delete();
+
+        return redirect('sub_user')->with('success', 'User Data Removed');
     }
 }
